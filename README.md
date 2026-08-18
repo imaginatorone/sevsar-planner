@@ -5,7 +5,7 @@
 - В n8n собран RAG workflow:
   - `Webhook`
   - `AI Agent`
-  - `Groq Chat Model` (Вместо 'llama-3.3-70b-versatile', которая была отключена 16 августа 2026 года, используется 'gpt-oss-120b')
+  - `Groq Chat Model` (Вместо `llama-3.3-70b-versatile`, которая была отключена 16 августа 2026 года, используется `gpt-oss-120b`)
   - `Supabase Vector Store`
   - Hugging Face embeddings
 - Frontend планера подключён к n8n через `fetch`.
