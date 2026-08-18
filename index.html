@@ -1219,27 +1219,30 @@
     }
 
     async function sendToAI(message) {
-      const N8N_WEBHOOK_URL = "http://localhost:5678/webhook/rag-chat";
-      
+      const N8N_WEBHOOK_URL = "/api/rag-chat";
+
       aiSend.disabled = true;
       aiSend.textContent = "⏳";
       aiInput.disabled = true;
 
       try {
-        // Собираем данные недели
         const weekData = collectWeekDataForAI();
-        
-        console.log('📤 Отправляем данные в AI:', { message, context: weekData });
 
-        const payload = new URLSearchParams();
+        console.log("📤 Отправляем данные в AI:", {
+          message,
+          context: weekData
+        });
 
-        payload.set("message", message);
-        payload.set("context", JSON.stringify(weekData));
-        payload.set("timestamp", new Date().toISOString());
-          
         const response = await fetch(N8N_WEBHOOK_URL, {
-            method: "POST",
-            body: payload
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            message: message,
+            context: weekData,
+            timestamp: new Date().toISOString()
+          })
         });
 
         if (!response.ok) {
@@ -1247,8 +1250,7 @@
         }
 
         const data = await response.json();
-        
-        // Получаем ответ из разных возможных полей
+
         const reply =
           data.response ||
           data.reply ||
