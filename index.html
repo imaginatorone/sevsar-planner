@@ -1231,16 +1231,15 @@
         
         console.log('📤 Отправляем данные в AI:', { message, context: weekData });
 
+        const payload = new URLSearchParams();
+
+        payload.set("message", message);
+        payload.set("context", JSON.stringify(weekData));
+        payload.set("timestamp", new Date().toISOString());
+          
         const response = await fetch(N8N_WEBHOOK_URL, {
-          method: "POST",
-          headers: { 
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            message: message,
-            context: weekData,
-            timestamp: new Date().toISOString()
-          }),
+            method: "POST",
+            body: payload
         });
 
         if (!response.ok) {
