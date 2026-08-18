@@ -1219,7 +1219,7 @@
     }
 
     async function sendToAI(message) {
-      const N8N_WEBHOOK_URL = "https://n8n.decartus.team/webhook/ai-chat-john-kreml";
+      const N8N_WEBHOOK_URL = "http://localhost:5678/webhook/rag-chat";
       
       aiSend.disabled = true;
       aiSend.textContent = "⏳";
@@ -1250,8 +1250,13 @@
         const data = await response.json();
         
         // Получаем ответ из разных возможных полей
-        const reply = data.reply || data.answer || data.message || 
-                     data.text || "Не удалось получить ответ от AI";
+        const reply =
+          data.response ||
+          data.reply ||
+          data.answer ||
+          data.message ||
+          data.text ||
+          "Не удалось получить ответ от AI";
         
         addMessage(reply, true);
         
