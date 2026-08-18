@@ -858,6 +858,7 @@
       }
     }
   </style>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
 </head>
 <body>
 <div class="app">
@@ -966,6 +967,20 @@
 </div>
 
   <script>
+    // Telegram Mini App integration (safe fallback in a normal browser)
+    const tg = window.Telegram?.WebApp;
+    if (tg) {
+      try {
+        tg.ready();
+        tg.expand();
+        document.body.classList.add("tg-mini");
+        tg.setHeaderColor("#6429a5");
+        tg.setBackgroundColor("#f6f1e8");
+      } catch (e) {
+        console.warn("Telegram WebApp init warning:", e);
+      }
+    }
+
     const DAY_NAMES = [
       ["понедельник", "day-mon"],
       ["вторник", "day-tue"],
